@@ -82,7 +82,7 @@ render(){
           title: 'Action',
           key: 'action',
           render: (text, record) => (
-            <Button type="primary" shape="circle" icon={<RightOutlined />} onClick={(e) => {this.props.history.push({pathname:'/', record:record})}}/>
+            <Button type="primary" shape="circle" icon={<RightOutlined />} onClick={(e) => {this.props.history.push({pathname:'/place', state: {record:record}})}}/>
           ),
         },
       ];

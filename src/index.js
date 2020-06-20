@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import Login from './Login.js';
 import Main from './Main.js';
+import Place from './Place.js';
 
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 ReactDOM.render(
@@ -12,6 +13,7 @@ ReactDOM.render(
         <Switch>
             <Route path="/" exact={true} component={Login} />
             <Route path="/main" component={Main} />
+            <Route path="/place" component={Place} />
         </Switch>
     </ BrowserRouter>
     , document.getElementById('root'));
