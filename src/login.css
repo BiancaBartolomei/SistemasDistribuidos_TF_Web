@@ -1,0 +1,36 @@
+.ant-layout {
+    background: #ffffff !important;
+    font-family: 'Raleway', sans-serif;
+}
+
+h5 {
+    font-size: 20px;
+    text-align: center;
+    margin-bottom: 1.5em !important;
+}
+
+.ant-col:nth-child(2) {
+    display: flex;
+    align-items: center;
+}
+
+Button {
+    text-transform: uppercase !important;
+    letter-spacing: 1px;
+    border-radius: 3px !important;
+    width: 100%;
+    box-shadow: 1px 1px 4px 1px #bdbdbd !important;
+}
+
+.ant-form-item:nth-child(3) > .ant-col-offset-8 {
+    margin-left: 0 !important;
+}
+
+.ant-form-item > .ant-col-16 {
+    max-width: 100% !important;
+}
+
+.photo {
+    height: 100px;
+    width: 100px; 
+}

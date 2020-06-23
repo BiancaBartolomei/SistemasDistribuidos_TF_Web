@@ -1,18 +1,18 @@
 import React from 'react';
 import logo from './logo.svg';
-import login_img from './Images/Sistema.jpg';
+import login_img from './Images/Sistema.jpg'
 import ReactDOM from "react-dom";
-import './style.css';
+import './login.css';
 import "antd/dist/antd.css";
 import { Row, Col, Form, Input, Button, Card, Layout, Menu } from 'antd';
 import {
-    MenuUnfoldOutlined,
-    MenuFoldOutlined,
-    UserOutlined,
-    UnorderedListOutlined,
-    LogoutOutlined,
-    UploadOutlined,
-  } from '@ant-design/icons';
+  MenuUnfoldOutlined,
+  MenuFoldOutlined,
+  UserOutlined,
+  UnorderedListOutlined,
+  LogoutOutlined,
+  RightOutlined,
+} from '@ant-design/icons';
 
 
 const { Header, Sider, Content } = Layout;
@@ -27,30 +27,20 @@ const tailLayout = {
 };
 
 
-export default class Place extends React.Component {
+export default class PlaceEdit extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-        collapsed: false,
         place: this.props.location.state.record,
     }
-    console.log(this.state.place)
+    console.log(this.props.location.state)
   }
 
-  toggle = () => {
-    this.setState({
-      collapsed: !this.state.collapsed, 
-    });
-  };
-
-  saveChanges(){
-
-  }
 
   render(){
 
-    const deleteRequest = () => {
-      fetch(`http://localhost:3300/request/${this.state.place.user_id}&${this.state.place.place_id}`,{
+    const deletePlace = () => {
+      fetch(`http://localhost:3300/place/${this.state.place.place_id}`,{
         method: 'DELETE',
       })
         .then((response) => response.json())
@@ -66,8 +56,8 @@ export default class Place extends React.Component {
 
     const saveChanges = (values) =>{
       var that = this;
-      fetch('http://localhost:3300/place',{
-            method: 'POST',
+      fetch(`http://localhost:3300/place/${this.state.place.place_id}`,{
+            method: 'PATCH',
             headers: {
               Accept: 'application/json',
               'Content-Type': 'application/json'
@@ -77,38 +67,37 @@ export default class Place extends React.Component {
               cnpj: values.cnpj,
               area: values.area,
               max_qnt: values.capacidade,
-              lon: values.lon,
+              long: values.lon,
               lat: values.lat,
               endereco: values.endereco,
             })
           })
             .then((response) => response.json())
             .then((responseJson) => {
-                deleteRequest()
             })
             .catch((error) => {
               console.error(error);
             });
     }
-
+  
 
     return (
       <>
       <Layout style={{height:'100vh'}}>
-          <Sider >
-            <div className="logo" />
-            <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
-              <Menu.Item key="1" icon={<UserOutlined />} onClick={() => {this.props.history.push({pathname:'/Main'})}}>
-                Requisições Pendentes
-              </Menu.Item>
-              <Menu.Item key="2" icon={<UnorderedListOutlined />} onClick={() => {this.props.history.push({pathname:'/All'})}}>
-                Lista de Estabelecimentos
-              </Menu.Item>
-              <Menu.Item key="3" icon={<LogoutOutlined />} onClick={() => {this.props.history.push({pathname:'/'})}}>
-                Sair da conta
-              </Menu.Item>
-            </Menu>
-          </Sider>
+      <Sider >
+          <div className="logo" />
+          <Menu theme="dark" mode="inline" defaultSelectedKeys={['2']}>
+            <Menu.Item key="1" icon={<UserOutlined />} onClick={() => {this.props.history.push({pathname:'/Main'})}}>
+              Requisições Pendentes
+            </Menu.Item>
+            <Menu.Item key="2" icon={<UnorderedListOutlined />}>
+              Lista de Estabelecimentos
+            </Menu.Item>
+            <Menu.Item key="3" icon={<LogoutOutlined />} onClick={() => {this.props.history.push({pathname:'/'})}}>
+              Sair da conta
+            </Menu.Item>
+          </Menu>
+        </Sider>
           <Layout className="site-layout">
             <Content
               className="site-layout-background"
@@ -118,6 +107,7 @@ export default class Place extends React.Component {
               }}
             >
               <Card>
+                  <h1>Editar Estabelecimentos</h1>
                 <Form
                   {...layout}
                   name="basic"
@@ -130,8 +120,6 @@ export default class Place extends React.Component {
                     endereco: this.state.place.endereco,
                     lat: this.state.place.lat,
                     lon: this.state.place.long,
-                    enviado: this.state.place.username,
-
                   }}
                   onFinish={saveChanges}
                   // onFinishFailed={onFinishFailed}
@@ -146,7 +134,8 @@ export default class Place extends React.Component {
                       },
                     ]}
                   >
-                    <Input style={{ width: '60%' }} />
+                    <Input 
+                    style={{ width: '60%' }}/>
                   </Form.Item>
 
                   <Form.Item
@@ -159,9 +148,9 @@ export default class Place extends React.Component {
                       },
                     ]}
                   >
-                    <Input style={{ width: '60%' }} />
+                    <Input 
+                    style={{ width: '60%' }} />
                   </Form.Item>
-
 
                   <Form.Item
                     label="Endereço"
@@ -188,7 +177,8 @@ export default class Place extends React.Component {
                       },
                     ]}
                   >
-                    <Input style={{ width: '60%' }} />
+                    <Input 
+                    style={{ width: '60%' }} />
                   </Form.Item>
 
                   <Form.Item
@@ -201,53 +191,47 @@ export default class Place extends React.Component {
                       },
                     ]}
                   >
-                    <Input style={{ width: '60%' }} />
+                    <Input 
+                    style={{ width: '60%' }} />
                   </Form.Item>
 
-                  <Form.Item
-                    label="Latitude"
-                    name="lat"
-                    rules={[
-                      {
-                        required: true,
-                        message: 'Coloque a latitude',
-                      },
-                    ]}
-                  >
-                    <Input style={{ width: '60%' }} />
-                  </Form.Item>
 
-                  <Form.Item
-                    label="Longitude"
-                    name="lon"
-                    rules={[
-                      {
-                        required: true,
-                        message: 'Coloque a longitude',
-                      },
-                    ]}
-                  >
-                    <Input style={{ width: '60%' }} />
-                  </Form.Item>
+                    <Input.Group>
 
-                  <Form.Item
-                    label="Enviado por"
-                    name="enviado"
-                    rules={[
-                      {
-                        required: true,
-                      },
-                    ]}
-                  >
-                    <Input style={{ width: '60%' }} disabled={true}/>
-                  </Form.Item>
+
+                      <Form.Item
+                        label="Latitude"
+                        name="lat"
+                        rules={[
+                          {
+                            required: true,
+                          },
+                        ]}
+                      >
+                      <Input style={{ width: '60%' }} name="lat"/>
+                    </Form.Item>
+
+                    <Form.Item
+                        label="Longitude"
+                        name="lon"
+                        rules={[
+                          {
+                            required: true,
+                          },
+                        ]}
+                      >
+                      <Input style={{ width: '60%' }} name="lon"/>
+                    </Form.Item>
+
+                    </Input.Group>
               
 
                   <Form.Item {...tailLayout}>
                     <Button type="primary" htmlType="submit" >
                       Aceitar
                     </Button>
-                    <Button type="link" htmlType="button" onClick={() => deleteRequest()}>
+
+                    <Button type="link" htmlType="button" onClick={() => deletePlace()}>
                       Recusar
                     </Button>
                   </Form.Item>

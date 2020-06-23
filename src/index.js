@@ -6,6 +6,8 @@ import './index.css';
 import Login from './Login.js';
 import Main from './Main.js';
 import Place from './Place.js';
+import All from './All.js';
+import PlaceEdit from './PlaceEdit.js';
 
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 ReactDOM.render(
@@ -14,6 +16,8 @@ ReactDOM.render(
             <Route path="/" exact={true} component={Login} />
             <Route path="/main" component={Main} />
             <Route path="/place" component={Place} />
+            <Route path="/all" component={All} />
+            <Route path="/placeEdit" component={PlaceEdit} />
         </Switch>
     </ BrowserRouter>
     , document.getElementById('root'));
