@@ -2,16 +2,17 @@ import React from 'react';
 import logo from './logo.svg';
 import login_img from './Images/Sistema.jpg'
 import ReactDOM from "react-dom";
-import './Login.css';
+import './login.css';
 import "antd/dist/antd.css";
 import { Row, Col, Form, Input, Button, Card, Layout, Menu } from 'antd';
 import {
-    MenuUnfoldOutlined,
-    MenuFoldOutlined,
-    UserOutlined,
-    VideoCameraOutlined,
-    UploadOutlined,
-  } from '@ant-design/icons';
+  MenuUnfoldOutlined,
+  MenuFoldOutlined,
+  UserOutlined,
+  UnorderedListOutlined,
+  LogoutOutlined,
+  RightOutlined,
+} from '@ant-design/icons';
 
 
 const { Header, Sider, Content } = Layout;
@@ -83,17 +84,20 @@ export default class PlaceEdit extends React.Component {
     return (
       <>
       <Layout style={{height:'100vh'}}>
-          <Sider >
-            <div className="logo" />
-            <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
-              <Menu.Item key="1" icon={<UserOutlined />} onClick={() => this.props.history.push('/main')}>
-                Requisições Pendentes
-              </Menu.Item>
-              <Menu.Item key="2" icon={<VideoCameraOutlined />}>
-                Lista de Estabelecimentos
-              </Menu.Item>
-            </Menu>
-          </Sider>
+      <Sider >
+          <div className="logo" />
+          <Menu theme="dark" mode="inline" defaultSelectedKeys={['2']}>
+            <Menu.Item key="1" icon={<UserOutlined />} onClick={() => {this.props.history.push({pathname:'/Main'})}}>
+              Requisições Pendentes
+            </Menu.Item>
+            <Menu.Item key="2" icon={<UnorderedListOutlined />}>
+              Lista de Estabelecimentos
+            </Menu.Item>
+            <Menu.Item key="3" icon={<LogoutOutlined />} onClick={() => {this.props.history.push({pathname:'/'})}}>
+              Sair da conta
+            </Menu.Item>
+          </Menu>
+        </Sider>
           <Layout className="site-layout">
             <Content
               className="site-layout-background"
@@ -103,7 +107,7 @@ export default class PlaceEdit extends React.Component {
               }}
             >
               <Card>
-                  <Text>Editar Estabelecimentos</Text>
+                  <h1>Editar Estabelecimentos</h1>
                 <Form
                   {...layout}
                   name="basic"
@@ -227,7 +231,7 @@ export default class PlaceEdit extends React.Component {
                       Aceitar
                     </Button>
 
-                    <Button type="link" htmlType="button" onClick={() => deleteRequest()}>
+                    <Button type="link" htmlType="button" onClick={() => deletePlace()}>
                       Recusar
                     </Button>
                   </Form.Item>

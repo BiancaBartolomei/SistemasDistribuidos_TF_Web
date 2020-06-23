@@ -98,7 +98,7 @@ render(){
           title: 'Editar',
           key: 'action',
           render: (text, record) => (
-            <Button type="primary" shape="circle" icon={<RightOutlined />} onClick={(e) => {this.props.history.push({pathname:'/Edit', state: {record:record}})}}/>
+            <Button type="primary" shape="circle" icon={<RightOutlined />} onClick={(e) => {this.props.history.push({pathname:'/placeEdit', state: {record:record}})}}/>
           ),
         },
       ];

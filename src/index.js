@@ -7,7 +7,7 @@ import Login from './Login.js';
 import Main from './Main.js';
 import Place from './Place.js';
 import All from './All.js';
-import Edit from './Edit.js';
+import PlaceEdit from './PlaceEdit.js';
 
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 ReactDOM.render(
@@ -17,7 +17,7 @@ ReactDOM.render(
             <Route path="/main" component={Main} />
             <Route path="/place" component={Place} />
             <Route path="/all" component={All} />
-            <Route path="/edit" component={Edit} />
+            <Route path="/placeEdit" component={PlaceEdit} />
         </Switch>
     </ BrowserRouter>
     , document.getElementById('root'));
