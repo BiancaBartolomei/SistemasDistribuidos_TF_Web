@@ -56,7 +56,7 @@ export default class PlaceEdit extends React.Component {
 
     const saveChanges = (values) =>{
       var that = this;
-      fetch('http://localhost:3300/place',{
+      fetch(`http://localhost:3300/place/${this.state.place.place_id}`,{
             method: 'PATCH',
             headers: {
               Accept: 'application/json',

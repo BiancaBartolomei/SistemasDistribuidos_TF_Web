@@ -28,16 +28,18 @@ const tailLayout = {
 
 
 export default class Place extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
         collapsed: false,
+        place: this.props.location.state.record,
     }
+    console.log(this.state.place)
   }
 
   toggle = () => {
     this.setState({
-      collapsed: !this.state.collapsed,
+      collapsed: !this.state.collapsed, 
     });
   };
 
@@ -46,6 +48,48 @@ export default class Place extends React.Component {
   }
 
   render(){
+
+    const deleteRequest = () => {
+      fetch(`http://localhost:3300/request/${this.state.place.user_id}&${this.state.place.place_id}`,{
+        method: 'DELETE',
+      })
+        .then((response) => response.json())
+        .then((responseJson) => {
+          if(responseJson){
+            this.props.history.push('/main');
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+
+    const saveChanges = (values) =>{
+      var that = this;
+      fetch('http://localhost:3300/place',{
+            method: 'POST',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              name: values.nome,
+              cnpj: values.cnpj,
+              area: values.area,
+              max_qnt: values.capacidade,
+              lon: values.lon,
+              lat: values.lat,
+              endereco: values.endereco,
+            })
+          })
+            .then((response) => response.json())
+            .then((responseJson) => {
+                deleteRequest()
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+    }
 
 
     return (
@@ -79,8 +123,17 @@ export default class Place extends React.Component {
                   name="basic"
                   initialValues={{
                     remember: true,
+                    nome: this.state.place.name,
+                    cnpj: this.state.place.cnpj,
+                    area: this.state.place.area,
+                    capacidade: this.state.place.max_qnt,
+                    endereco: this.state.place.endereco,
+                    lat: this.state.place.lat,
+                    lon: this.state.place.long,
+                    enviado: this.state.place.username,
+
                   }}
-                  onFinish={this.saveChanges}
+                  onFinish={saveChanges}
                   // onFinishFailed={onFinishFailed}
                 >
                   <Form.Item
@@ -107,6 +160,21 @@ export default class Place extends React.Component {
                     ]}
                   >
                     <Input style={{ width: '60%' }} />
+                  </Form.Item>
+
+
+                  <Form.Item
+                    label="Endereço"
+                    name="endereco"
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Coloque o endereço',
+                      },
+                    ]}
+                  >
+                    <Input 
+                    style={{ width: '60%' }} />
                   </Form.Item>
                   
 
@@ -137,19 +205,29 @@ export default class Place extends React.Component {
                   </Form.Item>
 
                   <Form.Item
-                    label="Localização"
-                    name="localização"
+                    label="Latitude"
+                    name="lat"
                     rules={[
                       {
                         required: true,
+                        message: 'Coloque a latitude',
                       },
                     ]}
                   >
-                    <Input.Group compact>
-                      <Input style={{ width: '30%' }} defaultValue="0571" />
-                      <Input style={{ width: '30%' }} defaultValue="26888888" />
-                    </Input.Group>
+                    <Input style={{ width: '60%' }} />
+                  </Form.Item>
 
+                  <Form.Item
+                    label="Longitude"
+                    name="lon"
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Coloque a longitude',
+                      },
+                    ]}
+                  >
+                    <Input style={{ width: '60%' }} />
                   </Form.Item>
 
                   <Form.Item
@@ -167,7 +245,10 @@ export default class Place extends React.Component {
 
                   <Form.Item {...tailLayout}>
                     <Button type="primary" htmlType="submit" >
-                      Salvar
+                      Aceitar
+                    </Button>
+                    <Button type="link" htmlType="button" onClick={() => deleteRequest()}>
+                      Recusar
                     </Button>
                   </Form.Item>
                 </Form>
