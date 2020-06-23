@@ -1,15 +1,16 @@
 import React from 'react';
 import logo from './logo.svg';
-import login_img from './Images/Sistema.jpg'
+import login_img from './Images/Sistema.jpg';
 import ReactDOM from "react-dom";
-import './Login.css';
+import './style.css';
 import "antd/dist/antd.css";
 import { Row, Col, Form, Input, Button, Card, Layout, Menu, Table, Tag, Space } from 'antd';
 import {
     MenuUnfoldOutlined,
     MenuFoldOutlined,
     UserOutlined,
-    VideoCameraOutlined,
+    UnorderedListOutlined,
+    LogoutOutlined,
     RightOutlined,
   } from '@ant-design/icons';
 const { Header, Sider, Content } = Layout;
@@ -33,18 +34,16 @@ export default class Main extends React.Component {
   }
 
   componentDidMount() {
+    document.title = "Requisições Pendentes"
     fetch('http://localhost:3300/allRequests',{
         method: 'GET'})
         .then((response) => response.json())
         .then((responseJson) => {
             console.log(responseJson)
           if(responseJson.length === 0){
-            this.setState({erro: "Usuário e/ou senha incorreta."})
+            this.setState({erro: "Não foram encontradas requisições."})
           } else {
             this.setState({data: responseJson})
-            console.log('aaa')
-
-  
           }
         })
         .catch((error) => {
@@ -79,7 +78,7 @@ render(){
           key: 'username',
         },
         {
-          title: 'Action',
+          title: 'Ação',
           key: 'action',
           render: (text, record) => (
             <Button type="primary" shape="circle" icon={<RightOutlined />} onClick={(e) => {this.props.history.push({pathname:'/place', state: {record:record}})}}/>
@@ -97,8 +96,11 @@ render(){
             <Menu.Item key="1" icon={<UserOutlined />}>
               Requisições Pendentes
             </Menu.Item>
-            <Menu.Item key="2" icon={<VideoCameraOutlined />}>
+            <Menu.Item key="2" icon={<UnorderedListOutlined />} onClick={() => {this.props.history.push({pathname:'/All'})}}>
               Lista de Estabelecimentos
+            </Menu.Item>
+            <Menu.Item key="3" icon={<LogoutOutlined />} onClick={() => {this.props.history.push({pathname:'/'})}}>
+              Sair da conta
             </Menu.Item>
           </Menu>
         </Sider>
