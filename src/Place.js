@@ -1,15 +1,16 @@
 import React from 'react';
 import logo from './logo.svg';
-import login_img from './Images/Sistema.jpg'
+import login_img from './Images/Sistema.jpg';
 import ReactDOM from "react-dom";
-import './Login.css';
+import './style.css';
 import "antd/dist/antd.css";
 import { Row, Col, Form, Input, Button, Card, Layout, Menu } from 'antd';
 import {
     MenuUnfoldOutlined,
     MenuFoldOutlined,
     UserOutlined,
-    VideoCameraOutlined,
+    UnorderedListOutlined,
+    LogoutOutlined,
     UploadOutlined,
   } from '@ant-design/icons';
 
@@ -53,11 +54,14 @@ export default class Place extends React.Component {
           <Sider >
             <div className="logo" />
             <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
-              <Menu.Item key="1" icon={<UserOutlined />}>
+              <Menu.Item key="1" icon={<UserOutlined />} onClick={() => {this.props.history.push({pathname:'/Main'})}}>
                 Requisições Pendentes
               </Menu.Item>
-              <Menu.Item key="2" icon={<VideoCameraOutlined />}>
+              <Menu.Item key="2" icon={<UnorderedListOutlined />} onClick={() => {this.props.history.push({pathname:'/All'})}}>
                 Lista de Estabelecimentos
+              </Menu.Item>
+              <Menu.Item key="3" icon={<LogoutOutlined />} onClick={() => {this.props.history.push({pathname:'/'})}}>
+                Sair da conta
               </Menu.Item>
             </Menu>
           </Sider>

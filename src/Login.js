@@ -1,6 +1,6 @@
 import React from 'react';
-import login_img from './Images/Sistema.jpg'
-import './Login.css';
+import login_img from './Images/Sistema.jpg';
+import './login.css';
 import "antd/dist/antd.css";
 import { Row, Col, Form, Input, Button, Card, Layout } from 'antd';
 
@@ -22,6 +22,11 @@ export default class Login extends React.Component {
       erro: '',
     }
   }
+
+  componentDidMount() {
+    document.title = "Painel do Administrador";
+  }
+
   render(){
     const loginAuth = (values) => {
       console.log(values);
@@ -62,12 +67,12 @@ export default class Login extends React.Component {
       <Layout>
         <Row style={{height: '100vh'}}>
           <Col span={17}>
-            <Row><img alt="example" src={login_img} style={{width: '70vw', height: '100vh'}}/></Row>
+            <Row><img alt="example" src={login_img} style={{width: '65vw', height: '100vh'}}/></Row>
           </Col>
-          <Col >
-            <Row style={{paddingTop: "80%", paddingLeft: "15%"}}>
           <Col>
-          <h5>Painel do Administrador</h5>
+            <Row>
+          <Col>
+          <h5>Painel do <b>administrador</b></h5>
         <Form
         {...layout}
         name="basic"
@@ -78,12 +83,12 @@ export default class Login extends React.Component {
         // onFinishFailed={onFinishFailed}
       >
         <Form.Item
-          label="Username"
+          label="Usuário:"
           name="email"
           rules={[
             {
               required: true,
-              message: 'Please input your username!',
+              message: 'Preencha seu usuário',
             },
           ]}
         >
@@ -91,12 +96,12 @@ export default class Login extends React.Component {
         </Form.Item>
 
         <Form.Item
-          label="Password"
+          label="Senha:"
           name="senha"
           rules={[
             {
               required: true,
-              message: 'Please input your password!',
+              message: 'Preencha sua senha',
             },
           ]}
         >
@@ -107,7 +112,7 @@ export default class Login extends React.Component {
 
         <Form.Item {...tailLayout}>
           <Button type="primary" htmlType="submit" >
-            Submit
+            Entrar
           </Button>
         </Form.Item>
       </Form>
